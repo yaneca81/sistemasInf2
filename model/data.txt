@@ -1,0 +1,33 @@
+CREATE DATABASE crud_php;
+
+CREATE TABLE categoria (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(255) NOT NULL,
+    descripcion VARCHAR(255)
+);
+
+INSERT INTO categoria (nombre, descripcion) VALUES 
+('Conferencia', 'Eventos relacionados con conferencias y charlas.'),
+('Seminario', 'Eventos educativos como seminarios y talleres.'),
+('Concierto', 'Eventos musicales y conciertos.');
+
+
+
+-- Asegúrate de que la tabla `evento` esté creada
+CREATE TABLE evento (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(255) NOT NULL,
+    tema VARCHAR(255),
+    descripcion VARCHAR(255),
+    fecha DATE,
+    ubicacion VARCHAR(255),
+    estado VARCHAR(255),
+    id_Categoria INT,
+    FOREIGN KEY (id_Categoria) REFERENCES categoria(id)
+);
+
+-- Insertar datos en la tabla `evento`
+INSERT INTO evento (nombre, tema, descripcion, fecha, ubicacion, id_Categoria) VALUES 
+('Conferencia de Tecnología', 'Innovación en TI', 'Conferencia sobre las últimas tendencias en tecnología.', '2024-07-10', 'Centro de Convenciones','Pendiente', 1),
+('Seminario de Marketing', 'Estrategias de Marketing', 'Seminario sobre nuevas estrategias de marketing digital.', '2024-08-15', 'Hotel Plaza','Pendiente', 2),
+('Concierto de Rock', 'Rock Clásico', 'Concierto de las mejores bandas de rock clásico.', '2024-09-20', 'Estadio Nacional','Pendiente', 3);
