@@ -6,18 +6,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eventos Pro</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+    <style>
+        .custom-alert {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1050; /* Asegúrate de que esté por encima de otros elementos */
+            width: 50%; /* Ancho ajustable */
+            text-align: center;
+        }
+    </style>
+
 </head>
 
 <body>
 
 
-    <div class="container-fluid row ml-3">
+    <div class="container-fluid row ml-3 ">
 
 
-        <form class="col-2 p-3 m-3" method="POST">
+        
+        <div class="card m-4">
+            <div class="card-body">
+            <form  method="POST">
             <h3 class="text-center text-secondary">Crear Nuevo Evento</h3>
             <?php
-            include "../model/conexion.php";
+            
             include "../controller/controller.evento.php";
 
 
@@ -57,8 +73,12 @@
             <button type="submit" class="btn btn-primary" name="btnregistrar" value="ok">Registrar</button>
         </form>
 
+            </div>
+        </div>
+       
+
         <div class="col-8 p-4">
-            <table class="table">
+            <table class="table table-striped">
                 <thead class="bg-info">
                     <tr>
                         <th scope="col">Nombre</th>
@@ -66,7 +86,7 @@
                         <th scope="col">Descripcion</th>
                         <th scope="col">Fecha</th>
                         <th scope="col">Ubicacion</th>
-                        <th scope="col"></th>
+                        
                         <th scope="col">Categoria</th>
                         <th scope="col">Estado</th>
                         <th scope="col"></th>
@@ -77,7 +97,7 @@
 
                     while ($datos = $listEvents->fetch_object()) { ?>
                         <tr>
-                            <td><?php echo $datos->id; ?></td>
+                            
                             <td><?php echo $datos->nombre; ?></td>
                             <td><?php echo $datos->tema; ?></td>
                             <td><?php echo $datos->descripcion; ?></td>
@@ -86,7 +106,18 @@
                             <td><?php echo $datos->categoria_nombre; ?></td>
                             <td><?php echo $datos->estado; ?></td>
                             <td>
-                                <button class="btn btn-warning" data-toggle="modal" data-id="<?php echo $datos->id; ?>" data-target="#exampleModal">Editar</button>
+                            <button class="btn btn-warning edit-button";
+                                        data-toggle="modal" 
+                                        data-id="<?php echo $datos->id; ?>" 
+                                        data-nombre="<?php echo $datos->nombre; ?>" 
+                                        data-tema="<?php echo $datos->tema; ?>" 
+                                        data-descripcion="<?php echo $datos->descripcion; ?>" 
+                                        data-fecha="<?php echo $datos->fecha; ?>" 
+                                        data-ubicacion="<?php echo $datos->ubicacion; ?>" 
+                                        data-categoria="<?php echo $datos->id_Categoria; ?>" 
+                                        data-target="#exampleModal">
+                                    Editar
+                                </button>
                             </td>
                         </tr>
                     <?php } ?>
@@ -122,16 +153,16 @@
                                 <input type="date" class="form-control" id="edit-fecha" name="fecha" required>
                             </div>
                             <div class="form-group">
-                                <label for="edit-ubicacion">Ubicación</label>
+                                <label >Ubicación</label>
                                 <input type="text" class="form-control" id="edit-ubicacion" name="ubicacion" required>
                             </div>
                             <div class="form-group">
                                 <label for="edit-categoria">Categoría</label>
-                                <select required class="form-control" name="id_Categoria">
+                                <select required class="form-control" name="id_Categoria" id="edit-categoria">
                                     <?php 
                                     $categorias->data_seek(0); 
                                     while ($categoriaEdit = $categorias->fetch_object()) { ?>
-                                        <option  value="<?php echo $categoriaEdit->id; ?>"><?php echo $categoriaEdit->nombre; ?></option>
+                                        <option   value="<?php echo $categoriaEdit->id; ?>"><?php echo $categoriaEdit->nombre; ?></option>
                                     <?php } ?>
                                 </select>
                             </div>
@@ -152,21 +183,38 @@
 
     </div>
 
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script>
         // Ocultar alertas después de 3 segundos
         setTimeout(function() {
+            var alert = document.querySelector('.custom-alert');
             var alert = document.getElementById('alert');
             if (alert) {
                 alert.style.display = 'none';
             }
         }, 3000);
 
-        
-        
+        // Rellenar el formulario del modal con los datos del evento
+        $(document).on("click", ".edit-button", function () {
+            var id = $(this).data('id');
+            var nombre = $(this).data('nombre');
+            var tema = $(this).data('tema');
+            var descripcion = $(this).data('descripcion');
+            var fecha = $(this).data('fecha');
+            var ubicacion = $(this).data('ubicacion');
+            var categoria = $(this).data('categoria');
+
+            $("#edit-id").val(id);
+            $("#edit-nombre").val(nombre);
+            $("#edit-tema").val(tema);
+            $("#edit-descripcion").val(descripcion);
+            $("#edit-fecha").val(fecha);
+            $("#edit-ubicacion").val(ubicacion);
+            $("#edit-categoria").val(categoria);
+        });
     </script>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 </body>
 
 </html>

@@ -13,7 +13,7 @@ if (isset($_POST['btnregistrar'])) {
         // Inserción del evento en la base de datos
 
 
-        $sql = $conexion->query(" insert into evento (nombre, tema, descripcion, fecha, ubicacion, id_Categoria) values ('$nombre', '$tema', '$descripcion', '$fecha', '$ubicacion', $id_Categoria)");
+        $sql = $conexion->query(" insert into evento (nombre, tema, descripcion, fecha, ubicacion,estado, id_Categoria) values ('$nombre', '$tema', '$descripcion', '$fecha', '$ubicacion','Pendiente', $id_Categoria)");
 
 
         if ($sql) {
@@ -27,12 +27,31 @@ if (isset($_POST['btnregistrar'])) {
     }
 }
 
-// Consulta para obtener los datos del evento seleccionado
+// Editar un evento existente
 if (isset($_POST['btneditar'])) {
-    //$id_evento = $_POST['id']; // ID del evento que se quiere editar
+    if (!empty($_POST["id"]) && !empty($_POST["nombre"]) && !empty($_POST["tema"]) && !empty($_POST["fecha"]) && !empty($_POST["ubicacion"]) && !empty($_POST["descripcion"]) && !empty($_POST["id_Categoria"])) {
+        $id = $_POST['id'];
+        $nombre = $_POST['nombre'];
+        $tema = $_POST['tema'];
+        $fecha = $_POST['fecha'];
+        $ubicacion = $_POST['ubicacion'];
+        $id_Categoria = $_POST['id_Categoria'];
+        $descripcion = $_POST['descripcion'];
 
-    echo "Success";
+        // Actualización del evento en la base de datos
+        $sql = $conexion->query("UPDATE evento SET nombre='$nombre', tema='$tema', descripcion='$descripcion', fecha='$fecha', ubicacion='$ubicacion', id_Categoria=$id_Categoria WHERE id=$id");
+
+        if ($sql) {
+            echo '<div class="alert alert-success">Evento actualizado correctamente</div>';
+            echo '<meta http-equiv="refresh" content="2;url=index.php">';
+        } else {
+            echo '<div class="alert alert-danger">Error al actualizar el evento</div>';
+        }
+    } else {
+        echo '<div class="alert alert-danger">Alguno de los campos está vacío</div>';
+    }
 }
+
 
 //Listar categoria
 
