@@ -1,0 +1,25 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+h1 {
+    color: #333;
+}
+form {
+    margin-bottom: 20px;
+}
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+li {
+    margin-bottom: 10px;
+}
+.jumbotron {
+    background-color: #610a4e;
+    color: white;
+    padding: 2rem 1rem;
+}
+.card-header {
+    font-size: 1.5rem;
+}
