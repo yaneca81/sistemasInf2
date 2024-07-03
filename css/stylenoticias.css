@@ -1,0 +1,28 @@
+/* Archivo: stylenoticias.css */
+
+/* Estilo para el contenedor de cada noticia */
+.noticia {
+    background-color: #add8e6; /* Color celeste */
+    color: #000; /* Letras negras */
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+
+/* Estilo para las imágenes de las noticias */
+.noticia img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin-bottom: 10px;
+}
+
+/* Estilo para el título de las noticias */
+.noticia h2 {
+    margin-top: 0;
+}
+
+/* Estilo para el contenido de las noticias */
+.noticia p {
+    margin: 10px 0;
+}
